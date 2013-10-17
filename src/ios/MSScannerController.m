@@ -208,7 +208,7 @@
     [_resultOverlay setFrame:mainFrame];
     [_plugin.viewController.view addSubview:_resultOverlay];
 
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - MSScannerSessionDelegate

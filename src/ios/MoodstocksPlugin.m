@@ -110,7 +110,7 @@
                                              smallTargetSupport:smallTargetSupport
                                                          plugin:self];
 
-    [self.viewController presentModalViewController:self.scanner animated:YES];
+    [self.viewController presentViewController:self.scanner animated:YES completion:nil];
 
 #if __has_feature(objc_arc)
     scanHandler = nil;

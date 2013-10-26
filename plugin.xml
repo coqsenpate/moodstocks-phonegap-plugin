@@ -36,7 +36,6 @@
         <source-file src="src/ios/MSHandler.m" />
         <header-file src="src/ios/MSScannerController.h" />
         <source-file src="src/ios/MSScannerController.m" />
-        <header-file src="src/ios/MoodstocksAPI.h" />
 
         <!-- system frameworks -->
         <framework src="CoreMedia.framework" />

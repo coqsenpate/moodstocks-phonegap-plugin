@@ -111,7 +111,7 @@
 #else
     _toolbar = [[[UIToolbar alloc] init] autorelease];
 #endif
-    _toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+    _toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     _toolbar.barStyle = UIBarStyleBlack;
     _toolbar.tintColor = nil;
 
@@ -139,11 +139,11 @@
                     action:nil] autorelease];
 #endif
 
-    _toolbar.items = [NSArray arrayWithObjects:_barButton,flexSpace,nil];
+    _barButton.tintColor = [UIColor whiteColor];
+    _toolbar.items = [NSArray arrayWithObjects:flexSpace,_barButton,nil];
     [_toolbar sizeToFit];
     CGFloat toolbarHeight = _toolbar.frame.size.height;
-    CGFloat rootViewWidth = CGRectGetWidth(self.view.bounds);
-    CGRect rectArea = CGRectMake(0, 0, rootViewWidth, toolbarHeight);
+    CGRect rectArea = CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - toolbarHeight, [[UIScreen mainScreen] bounds].size.width, toolbarHeight);
     [_toolbar setFrame:rectArea];
 
     [self.view addSubview:_toolbar];

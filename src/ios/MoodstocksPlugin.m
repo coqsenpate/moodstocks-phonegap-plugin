@@ -29,11 +29,6 @@
 
 #include "moodstocks_sdk.h"
 
-// -------------------------------------------------
-// Moodstocks API key/secret pair
-// -------------------------------------------------
-#include "MoodstocksAPI.h"
-
 @class MSScannerController;
 @implementation MoodstocksPlugin
 
@@ -48,10 +43,13 @@
     }
     else {
 #if MS_SDK_REQUIREMENTS
+        NSString *apiKey = [command.arguments objectAtIndex:0];
+        NSString *apiSecret = [command.arguments objectAtIndex:1];
+
         NSError *err;
         MSScanner *scanner = [MSScanner sharedInstance];
 
-        if(![scanner openWithKey:MS_API_KEY secret:MS_API_SEC error:&err]) {
+        if(![scanner openWithKey:apiKey secret:apiSecret error:&err]) {
             ms_errcode ecode = [err code];
             // == DO NOT USE IN PRODUCTION: THIS IS A HELP MESSAGE FOR DEVELOPERS
             if (ecode == MS_CREDMISMATCH) {

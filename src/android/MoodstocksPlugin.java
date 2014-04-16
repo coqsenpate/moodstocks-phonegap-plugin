@@ -63,17 +63,11 @@ public class MoodstocksPlugin extends CordovaPlugin implements
 	public boolean compatible = false;
 	private Scanner scanner = null;
 
-	// --------------------------------
-	// Moodstocks API key/secret pair
-	// --------------------------------
-	private static final String API_KEY = "ApIkEy";
-	private static final String API_SECRET = "ApIsEcReT";
-
 	public boolean execute(String action, JSONArray args,
 			CallbackContext callbackContext) throws JSONException {
 
 		if (action.equals(OPEN)) {
-			this.open(callbackContext);
+			this.open(callbackContext, args);
 
 			return true;
 		} else if (action.equals(SYNC)) {
@@ -106,14 +100,16 @@ public class MoodstocksPlugin extends CordovaPlugin implements
 		return false;
 	}
 
-	private void open(CallbackContext callbackContext) {
+	private void open(CallbackContext callbackContext, JSONArray args) {
 		compatible = Scanner.isCompatible();
 		if (compatible) {
 			try {
 				this.scanner = Scanner.get();
-				scanner.open(
-						this.cordova.getActivity().getApplicationContext(),
-						API_KEY, API_SECRET);
+
+				String apiKey = args.getString(0);
+				String apiSecret = args.getString(1);
+
+				scanner.open(this.cordova.getActivity().getApplicationContext(), apiKey, apiSecret);
 				callbackContext.success();
 
 			} catch (MoodstocksError e) {

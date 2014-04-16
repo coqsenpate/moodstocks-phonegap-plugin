@@ -16,12 +16,12 @@ var MoodstocksPlugin = {
     },
 
     // Load scanner with given api key & api secret pair
-    open: function(success, fail) {
+    open: function(success, fail, apiKey, apiSecret) {
 
         success = this.callbackValidator("open success", success);
         fail = this.callbackValidator("open fail", fail);
 
-        return cordova.exec(success, fail, "MoodstocksPlugin","open", []);
+        return cordova.exec(success, fail, "MoodstocksPlugin","open", [apiKey, apiSecret]);
     },
 
     // Sync the cache

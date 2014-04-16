@@ -83,6 +83,7 @@
     [self.view addSubview:_videoPreview];
 
     // Set up html overlay
+/*
     [_resultOverlay setFrame:scannerFrame];
     _originBGColor = _resultOverlay.backgroundColor;
     _resultOverlay.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
@@ -90,6 +91,7 @@
     _resultOverlay.scrollView.scrollEnabled = NO;
 
     [self.view addSubview:_resultOverlay];
+*/
 }
 
 - (void)viewDidLoad {

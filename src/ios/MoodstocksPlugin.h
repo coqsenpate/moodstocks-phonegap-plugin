@@ -29,6 +29,10 @@
 @class MSScannerController;
 
 @interface MoodstocksPlugin : CDVPlugin
+{
+	NSString* apiKey;
+	NSString* apiSecret;
+}
 
 @property (nonatomic, retain)MSScannerController *scanner;
 

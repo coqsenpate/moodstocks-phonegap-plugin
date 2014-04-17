@@ -43,33 +43,44 @@
     }
     else {
 #if MS_SDK_REQUIREMENTS
-        NSString *apiKey = [command.arguments objectAtIndex:0];
-        NSString *apiSecret = [command.arguments objectAtIndex:1];
 
-        NSError *err;
-        MSScanner *scanner = [MSScanner sharedInstance];
+        NSString* previousKey = apiKey;
+        NSString* previousSecret = apiSecret;
 
-        if(![scanner openWithKey:apiKey secret:apiSecret error:&err]) {
-            ms_errcode ecode = [err code];
-            // == DO NOT USE IN PRODUCTION: THIS IS A HELP MESSAGE FOR DEVELOPERS
-            if (ecode == MS_CREDMISMATCH) {
-                NSString *errStr = @"there is a problem with your key/secret pair: "
-                "the current pair does NOT match with the one recorded within the on-disk datastore.";
-                MSDLog(@"\n\n [MOODSTOCKS SDK] SCANNER OPEN ERROR: %@", errStr);
+        apiKey = [command.arguments objectAtIndex:0];
+        apiSecret = [command.arguments objectAtIndex:1];
 
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errStr];
+        if (previousKey != nil && [previousKey isEqual:apiKey]) {
+            // Plugin was already initialized with same key so we're good.
 
-            }
-            // == DO NOT USE IN PRODUCTION: THIS IS A HELP MESSAGE FOR DEVELOPERS
-            else {
-                NSString *errStr = MSErrMsg(ecode);
-                MSDLog(@"[MOODSTOCKS SDK] SCANNER OPEN ERROR: %@", errStr);
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errStr];
-            }
-        }
-        else {
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                                             messageAsString:@"Scanner open succeeded."];
+                                             messageAsString:@"Scanner was already open."];
+        } else {
+            NSError *err;
+            MSScanner *scanner = [MSScanner sharedInstance];
+
+            if(![scanner openWithKey:apiKey secret:apiSecret error:&err]) {
+                ms_errcode ecode = [err code];
+                // == DO NOT USE IN PRODUCTION: THIS IS A HELP MESSAGE FOR DEVELOPERS
+                if (ecode == MS_CREDMISMATCH) {
+                    NSString *errStr = @"there is a problem with your key/secret pair: "
+                    "the current pair does NOT match with the one recorded within the on-disk datastore.";
+                    MSDLog(@"\n\n [MOODSTOCKS SDK] SCANNER OPEN ERROR: %@", errStr);
+
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errStr];
+
+                }
+                // == DO NOT USE IN PRODUCTION: THIS IS A HELP MESSAGE FOR DEVELOPERS
+                else {
+                    NSString *errStr = MSErrMsg(ecode);
+                    MSDLog(@"[MOODSTOCKS SDK] SCANNER OPEN ERROR: %@", errStr);
+                    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:errStr];
+                }
+            }
+            else {
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                                 messageAsString:@"Scanner open succeeded."];
+            }
         }
 #endif
     }

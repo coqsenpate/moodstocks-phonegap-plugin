@@ -81,7 +81,7 @@ var MoodstocksPlugin = {
         // Wrap the success callback with scan result's type and value
         function successWrapper(result) {
             for (strFormat in scanFormats) {
-                if (result.format === scanFormats[strFormat]) {
+                if (result && result.format === scanFormats[strFormat]) {
                     success.call(null, resultFormats[strFormat], result.value);
                     return;
                 }
